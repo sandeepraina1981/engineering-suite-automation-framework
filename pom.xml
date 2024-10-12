@@ -14,12 +14,12 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <serenity.core.version>4.2.3</serenity.core.version>
     <assertJ.version>3.26.3</assertJ.version>
-    <logback.version>1.5.8</logback.version>
+    <logback.version>1.5.9</logback.version>
     <maven.plugins.version>3.5.0</maven.plugins.version>
     <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
-    <junit.platform.launcher.version>1.11.1</junit.platform.launcher.version>
-    <cucumber.junit.platform.engine.version>7.19.0</cucumber.junit.platform.engine.version>
-    <junit.jupiter.engine.version>5.11.1</junit.jupiter.engine.version>
+    <junit.platform.launcher.version>1.11.2</junit.platform.launcher.version>
+    <cucumber.junit.platform.engine.version>7.20.1</cucumber.junit.platform.engine.version>
+    <junit.jupiter.engine.version>5.11.2</junit.jupiter.engine.version>
 
     <label></label>
     <suite_url></suite_url>
