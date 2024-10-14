@@ -2,8 +2,8 @@ FROM alpine:latest
 
 USER root
 
-RUN apk update && \
-    apk add --no-cache openjdk21 maven git openssh-client
+RUN wget update && \
+    wget add --no-cache openjdk21 maven git openssh-client
 
 ARG JAVA_HOME=/usr/lib/jvm/java-21-openjdk
 ARG MAVEN_HOME=/root/.m2
