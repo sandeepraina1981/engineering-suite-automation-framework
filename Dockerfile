@@ -12,6 +12,8 @@ ARG LENZE=/lenze
 ARG SUITE=$LENZE/suite
 ARG FRAMEWORK=$SUITE/testframework
 
+ENV http_proxy https://fra4.sme.zscaler.net:10181
+ENV https_proxy https://fra4.sme.zscaler.net:10181
 ENV GIT_ORGANIZATION=NUPANO
 ENV GIT_REPOSITOARY=nupano_suite_testautomation
 ENV GIT_BRANCH=main
