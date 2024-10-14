@@ -1,5 +1,7 @@
 FROM alpine:latest
 
+RUN addgroup -S suitetestrunner && adduser -S -G suitetestrunner suitetestrunner
+
 RUN apk update && \
     apk add --no-cache openjdk21 maven git openssh-client
 
@@ -10,6 +12,8 @@ ARG LENZE=/lenze
 ARG SUITE=$LENZE/suite
 ARG FRAMEWORK=$SUITE/testframework
 
+ENV http_proxy https://fra4.sme.zscaler.net:10181
+ENV https_proxy https://fra4.sme.zscaler.net:10181
 ENV GIT_ORGANIZATION=NUPANO
 ENV GIT_REPOSITOARY=nupano_suite_testautomation
 ENV GIT_BRANCH=main
@@ -33,6 +37,8 @@ RUN mvn verify -DskipTests
 
 WORKDIR $FRAMEWORK
 VOLUME $FRAMEWORK
+
+USER suitetestrunner
 
 CMD ["sh", "-c", "ssh-keyscan github.com >>/root/.ssh/known_hosts && \
                   git clone git@github.com:$GIT_ORGANIZATION/$GIT_REPOSITOARY.git . && \
