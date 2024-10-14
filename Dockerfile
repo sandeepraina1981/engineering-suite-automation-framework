@@ -1,6 +1,8 @@
 FROM alpine:latest
 
-RUN sudo apk update && \
+USER root
+
+RUN apk update && \
     apk add --no-cache openjdk21 maven git openssh-client
 
 ARG JAVA_HOME=/usr/lib/jvm/java-21-openjdk
@@ -16,20 +18,20 @@ ENV GIT_BRANCH=main
 ENV TEST_LABELS=regression
 ENV TEST_URL=https://www.google.com
 
-RUN sudo mkdir -m 777 -p $FRAMEWORK
-RUN sudo mkdir -m 777 -p $LENZE
-RUN sudo mkdir -m 777 -p $SUITE
-RUN sudo mkdir -m 777 -p $MAVEN_HOME
+RUN mkdir -m 777 -p $FRAMEWORK
+RUN mkdir -m 777 -p $LENZE
+RUN mkdir -m 777 -p $SUITE
+RUN mkdir -m 777 -p $MAVEN_HOME
 
-RUN sudo mkdir /root/.ssh && chmod -R 700 /root/.ssh
+RUN mkdir /root/.ssh && chmod -R 700 /root/.ssh
 ADD .ssh/ /root/.ssh
-RUN sudo chmod 0400 /root/.ssh/id_rsa
+RUN chmod 0400 /root/.ssh/id_rsa
 
 ADD pom.xml $SUITE
 ADD settings.xml $MAVEN_HOME/settings.xml
 
 WORKDIR $SUITE
-RUN sudo mvn verify -DskipTests
+RUN mvn verify -DskipTests
 
 WORKDIR $FRAMEWORK
 VOLUME $FRAMEWORK
