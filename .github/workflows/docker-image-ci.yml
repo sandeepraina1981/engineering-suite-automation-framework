@@ -13,7 +13,7 @@ env:
   GITHUB_USER: ${{ github.actor }}
   GITHUB_TOKEN: ${{ github.token }}
   GPR_REGISTRY: ghcr.io
-  GPR_REPOSITORY: NUPANO/nupano-suite-testautomation
+  GPR_REPOSITORY: nupano/nupano-suite-testautomation
   IMAGE: nupanotestsuite-runner
   IMAGE_TAG: latest
   CONTEXT: .    
