@@ -14,12 +14,12 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <serenity.core.version>4.2.3</serenity.core.version>
     <assertJ.version>3.26.3</assertJ.version>
-    <logback.version>1.5.9</logback.version>
-    <maven.plugins.version>3.5.0</maven.plugins.version>
+    <logback.version>1.5.10</logback.version>
+    <maven.plugins.version>3.5.1</maven.plugins.version>
     <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
-    <junit.platform.launcher.version>1.11.2</junit.platform.launcher.version>
-    <cucumber.junit.platform.engine.version>7.20.1</cucumber.junit.platform.engine.version>
-    <junit.jupiter.engine.version>5.11.2</junit.jupiter.engine.version>
+    <junit.platform.launcher.version>1.11.1</junit.platform.launcher.version>
+    <cucumber.junit.platform.engine.version>7.19.0</cucumber.junit.platform.engine.version>
+    <junit.jupiter.engine.version>5.11.1</junit.jupiter.engine.version>
 
     <label></label>
     <suite_url></suite_url>
@@ -118,29 +118,23 @@
   </dependencies>
   <build>
     <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>${maven.plugins.version}</version>
-          <configuration>
-              <includes>
-                  <include>**/*TestExecutor.java</include>
-              </includes>
-              <skip>true</skip>
-          </configuration>
-          <dependencies>
-            <dependency>
-              <groupId>org.apache.maven.surefire</groupId>
-              <artifactId>surefire-junit-platform</artifactId>
-              <version>${maven.plugins.version}</version>
-            </dependency>
-          </dependencies>
-        </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${maven.plugins.version}</version>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
         <version>${maven.plugins.version}</version>
         <configuration>
+          <includes>
+            <include>**/*TestSuite.java</include>
+          </includes>
+
           <systemPropertyVariables>
             <tags>${label}</tags>
             <cucumber.plugin>pretty, io.cucumber.core.plugin.SerenityReporterParallel, timeline:report/serenity-results/timeline, json:report/cucumber-reports/cucumber-${label}.json, html:report/cucumber-reports/cucumber-${label}.html</cucumber.plugin>
@@ -148,10 +142,6 @@
 
           <parallel>none</parallel>
           <useUnlimitedThreads>false</useUnlimitedThreads>
-
-          <includes>
-            <include>**/*TestExecutor.java</include>
-          </includes>
         </configuration>
         <executions>
           <execution>

@@ -14,8 +14,6 @@ public class DemoDefinitions {
         SerenityRest.clear();
         SerenityRest.setUrlEncodingEnabled(false);
 
-        System.out.println(Serenity.environmentVariables().getProperty("webdriver.base.url"));
-
         actorApi.attemptsTo(Get.resource("/users/1")
                 .with(request -> request.header("User-Agent", "Apache")
                         .urlEncodingEnabled(false)));
