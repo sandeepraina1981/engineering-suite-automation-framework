@@ -36,5 +36,4 @@ VOLUME $FRAMEWORK
 
 CMD ["sh", "-c", "ssh-keyscan github.com >>/root/.ssh/known_hosts && \
                   git clone git@github.com:$GIT_ORGANIZATION/$GIT_REPOSITOARY.git . && \
-                  echo 'mvn -o verify -Dlabel=$TEST_LABELS -Dsuite_url=$TEST_URL' && \
                   mvn -o verify -Dlabel=$TEST_LABELS -Dsuite_url=$TEST_URL"]
