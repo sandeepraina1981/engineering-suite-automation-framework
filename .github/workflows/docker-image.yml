@@ -1,0 +1,40 @@
+name: NUPANO Suite Test Runner Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+    
+  workflow_dispatch:  
+
+env:
+  GITHUB_REPOSITORY: ${{ github.repository }}
+  GITHUB_REFERENCE: ${{ github.ref_name }}
+  GITHUB_CLEAN: true
+  GITHUB_USER: ${{ github.actor }}
+  GITHUB_TOKEN: ${{ github.token }}
+  GPR_REGISTRY: ghcr.io
+  GPR_REPOSITORY: NUPANO/nupano-suite-testautomation
+  IMAGE: nupanotestsuite-runner
+  IMAGE_TAG: latest
+  CONTEXT: .    
+    
+jobs:
+  build:
+    runs-on: [self-hosted, Linux, maven]
+
+    steps:
+    - name: Download latest pom and dockerfile
+      uses: actions/checkout@v4
+      with:
+          repository: ${{ env.GITHUB_REPOSITORY }}
+          ref: ${{ env.GITHUB_REFERENCE }}
+          token: ${{ env.GITHUB_TOKEN }}
+          clean: ${{ env.GITHUB_CLEAN }}
+          
+    - name: Build the Docker image
+      run: | 
+        docker build --rm --no-cache -t ${{ env.GPR_REPOSITORY }}/${{ env.IMAGE }} ${{ env.CONTEXT }}
+        docker tag ${{ env.GPR_REPOSITORY }}/${{ env.IMAGE }} ${{ env.GPR_REGISTRY }}/${{ env.GPR_REPOSITORY }}/${{ env.IMAGE }}:${{ env.IMAGE_TAG }}
+
+        docker login https://${{ env.GPR_REGISTRY }} -u ${{ env.GITHUB_USER }} -p ${{ env.GITHUB_TOKEN }}
+        docker push ${{ env.GPR_REGISTRY }}/${{ env.GPR_REPOSITORY }}/${{ env.IMAGE }}:${{ env.IMAGE_TAG }}
