@@ -33,7 +33,7 @@ jobs:
           
     - name: Build the Docker image
       run: | 
-        docker build --rm --no-cache --network host -t ${{ env.GPR_REPOSITORY }}/${{ env.IMAGE }} ${{ env.CONTEXT }}
+        docker build --rm --no-cache -t ${{ env.GPR_REPOSITORY }}/${{ env.IMAGE }} ${{ env.CONTEXT }}
         docker tag ${{ env.GPR_REPOSITORY }}/${{ env.IMAGE }} ${{ env.GPR_REGISTRY }}/${{ env.GPR_REPOSITORY }}/${{ env.IMAGE }}:${{ env.IMAGE_TAG }}
 
         docker login https://${{ env.GPR_REGISTRY }} -u ${{ env.GITHUB_USER }} -p ${{ env.GITHUB_TOKEN }}
