@@ -21,6 +21,9 @@ env:
 jobs:
   build:
     runs-on: [self-hosted, Linux, docker]
+    permissions:
+      contents: read
+      packages: write
 
     steps:
     - name: Download latest pom and dockerfile
