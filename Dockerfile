@@ -1,9 +1,9 @@
 FROM alpine:latest
 
-USER root
+RUN addgroup -S suitetestrunner && adduser -S -G suitetestrunner suitetestrunner
 
-RUN wget update && \
-    wget add --no-cache openjdk21 maven git openssh-client
+RUN apk update && \
+    apk add --no-cache openjdk21 maven git openssh-client
 
 ARG JAVA_HOME=/usr/lib/jvm/java-21-openjdk
 ARG MAVEN_HOME=/root/.m2
@@ -35,6 +35,8 @@ RUN mvn verify -DskipTests
 
 WORKDIR $FRAMEWORK
 VOLUME $FRAMEWORK
+
+USER suitetestrunner
 
 CMD ["sh", "-c", "ssh-keyscan github.com >>/root/.ssh/known_hosts && \
                   git clone git@github.com:$GIT_ORGANIZATION/$GIT_REPOSITOARY.git . && \
