@@ -20,7 +20,7 @@ env:
     
 jobs:
   build:
-    runs-on: [self-hosted, Linux, maven]
+    runs-on: [self-hosted, Linux, docker]
 
     steps:
     - name: Download latest pom and dockerfile
