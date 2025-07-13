@@ -8,11 +8,11 @@
   <packaging>jar</packaging>
 
   <name>Lenze NUPANO Suite Test Automation Framework</name>
-  <url>http://maven.apache.org</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <serenity.core.version>4.2.3</serenity.core.version>
+    <serenity.cucumber.version>4.1.14</serenity.cucumber.version>
     <assertJ.version>3.26.3</assertJ.version>
     <logback.version>1.5.10</logback.version>
     <maven.plugins.version>3.5.1</maven.plugins.version>
@@ -115,6 +115,28 @@
       <version>${junit.jupiter.engine.version}</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>${junit.jupiter.engine.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.microsoft.azure</groupId>
+      <artifactId>msal4j</artifactId>
+      <version>1.21.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjweaver</artifactId>
+      <version>1.9.19</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>6.2.8</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
@@ -159,6 +181,10 @@
         <configuration>
           <source>21</source>
           <target>21</target>
+          <compilerArgs>
+            <arg>-Xlint:deprecation</arg>
+            <arg>-Xlint:unchecked</arg>
+          </compilerArgs>
         </configuration>
         <dependencies>
           <dependency>
@@ -198,6 +224,27 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>tech.grasshopper</groupId>
+        <artifactId>cucumber-pdf-plugin</artifactId>
+        <version>1.14.0</version>
+        <executions>
+          <execution>
+            <id>report</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>pdfreport</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <cucumberJsonReportDirectory>${project.basedir}/report/cucumber-reports</cucumberJsonReportDirectory>
+          <cucumberPdfReportDirectory>${project.basedir}/report/release-report</cucumberPdfReportDirectory>
+          <cucumberPdfReportDirectoryTimeStamp>null</cucumberPdfReportDirectoryTimeStamp>
+          <title>Lenze Test Suite QA Release Report</title>
+          <displayScenario>false</displayScenario>
+        </configuration>
       </plugin>
     </plugins>
   </build>

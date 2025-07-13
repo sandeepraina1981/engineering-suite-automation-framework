@@ -7,8 +7,8 @@ import org.lenze.nupano.suite.properties.SuiteProperties;
 
 public class ParameterDefinitions extends SuiteStage {
     @ParameterType(".*")
-    public Actor actorAPI(String actorName) {
-        SuiteProperties.activeStage = stageAPI();
+    public Actor actorOrgAPI(String actorName) {
+        SuiteProperties.activeStage = stageAPI("orgs");
         return SuiteProperties.activeStage.shineSpotlightOn(actorName);
     }
 
