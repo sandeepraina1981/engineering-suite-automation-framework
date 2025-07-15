@@ -52,10 +52,10 @@ public class Azure {
                 driver.get().get(url.toURI().toString());
 
                 wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("signInName")));
-                driver.get().findElement(By.id("signInName")).sendKeys(Serenity.environmentVariables().getProperty("nupano_suiteadmin"));
+                driver.get().findElement(By.id("signInName")).sendKeys(Serenity.environmentVariables().getProperty("nupanosuite_user"));
                 driver.get().findElement(By.id("continue")).click();
                 wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password")));
-                driver.get().findElement(By.id("password")).sendKeys(Serenity.environmentVariables().getProperty("nupano_password"));
+                driver.get().findElement(By.id("password")).sendKeys(Serenity.environmentVariables().getProperty("nupanosuite_password"));
                 driver.get().findElement(By.cssSelector("button[type='submit']")).click();
 
             } catch (Exception e) {

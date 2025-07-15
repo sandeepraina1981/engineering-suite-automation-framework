@@ -14,7 +14,6 @@ import static io.cucumber.junit.platform.engine.Constants.GLUE_PROPERTY_NAME;
 public class LenzeSuiteTestSuite {
 //    @BeforeAll
 //    public static void LoadExecutor() {
-//        new Azure().B2C();
 //        SuiteElementLoader suiteElementLoader = new SuiteElementLoader();
 //        SuiteProperties.suitePageElements = suiteElementLoader.getSuitePageElements();
 //    }

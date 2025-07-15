@@ -129,17 +129,46 @@
     <dependency>
       <groupId>org.aspectj</groupId>
       <artifactId>aspectjweaver</artifactId>
-      <version>1.9.19</version>
-      <scope>test</scope>
+      <version>1.9.24</version>
     </dependency>
     <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
-      <version>6.2.8</version>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjrt</artifactId>
+      <version>1.9.24</version>
     </dependency>
   </dependencies>
   <build>
     <plugins>
+      <plugin>
+        <groupId>dev.aspectj</groupId>
+        <artifactId>aspectj-maven-plugin</artifactId>
+        <version>1.14.1</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjtools</artifactId>
+            <version>1.9.24</version>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <complianceLevel>21</complianceLevel>
+          <source>21</source>
+          <target>21</target>
+
+          <showWeaveInfo>true</showWeaveInfo>
+          <verbose>true</verbose>
+          <weaveDirectories>
+            <weaveDirectory>${project.build.outputDirectory}</weaveDirectory>
+          </weaveDirectories>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>test-compile</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
