@@ -1,4 +1,4 @@
-package org.lenze.nupano.suite.aspect;
+package org.lenze.nupano.suite.annotations.aspect;
 
 import io.cucumber.java.en.When;
 import net.serenitybdd.core.Serenity;
@@ -42,8 +42,12 @@ public class AzureB2CAuthenticationAspect {
 
         if (method != null) {
             AzureB2CAuthentication azureB2CAuthentication = method.getAnnotation(AzureB2CAuthentication.class);
+
             if (azureB2CAuthentication.type().equalsIgnoreCase("pkce"))
                 new Azure().B2C();
+
+            if (azureB2CAuthentication.type().equalsIgnoreCase("ui"))
+                new org.lenze.nupano.suite.authentiction.ui.Azure().SignIn();
         }
     }
 

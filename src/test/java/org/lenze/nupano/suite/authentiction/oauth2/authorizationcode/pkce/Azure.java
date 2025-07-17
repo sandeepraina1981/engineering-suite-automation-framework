@@ -2,23 +2,23 @@ package org.lenze.nupano.suite.authentiction.oauth2.authorizationcode.pkce;
 
 import com.microsoft.aad.msal4j.*;
 import net.serenitybdd.core.Serenity;
-import org.openqa.selenium.By;
+import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
+import org.junit.jupiter.api.DisplayName;
+import org.lenze.nupano.suite.properties.SuiteProperties;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.Duration;
 import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Azure {
+    @DisplayName("Perform SSO login using Microsoft Azure B2C")
     public void B2C() {
         String clientId = Serenity.environmentVariables().getProperty("azureb2c_clientId");
         String tenant = Serenity.environmentVariables().getProperty("azureb2c_tenant");
@@ -26,7 +26,7 @@ public class Azure {
         String redirectUri = Serenity.environmentVariables().getProperty("azureb2c_redirectUri");
         String scope = Serenity.environmentVariables().getProperty("azureb2c_scope");
 
-        AtomicReference<WebDriver> driver = new AtomicReference<>();
+        AtomicBoolean closeWebDriver = new AtomicBoolean(false);
 
         String authority = String.format(
                 "https://%s.b2clogin.com/%s.onmicrosoft.com/%s",
@@ -46,17 +46,8 @@ public class Azure {
 
         OpenBrowserAction browserAction = url -> {
             try {
-                System.out.println("Opening browser to: " + url);
-                driver.set(new EdgeDriver());
-                WebDriverWait wait = new WebDriverWait(driver.get(), Duration.ofMinutes(3));
-                driver.get().get(url.toURI().toString());
-
-                wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("signInName")));
-                driver.get().findElement(By.id("signInName")).sendKeys(Serenity.environmentVariables().getProperty("nupanosuite_user"));
-                driver.get().findElement(By.id("continue")).click();
-                wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password")));
-                driver.get().findElement(By.id("password")).sendKeys(Serenity.environmentVariables().getProperty("nupanosuite_password"));
-                driver.get().findElement(By.cssSelector("button[type='submit']")).click();
+                Serenity.environmentVariables().setProperty("nupanosuite_url", String.valueOf(url.toURI()));
+                closeWebDriver.set(new org.lenze.nupano.suite.authentiction.ui.Azure().SignIn());
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -87,7 +78,7 @@ public class Azure {
         Serenity.environmentVariables().setProperty("azureb2c_accesstoken", result.accessToken());
         Serenity.environmentVariables().setProperty("azureb2c_tokenID", result.idToken());
 
-        if (driver != null)
-            driver.get().quit();
+        if (closeWebDriver.get())
+            Serenity.getWebdriverManager().closeAllDrivers();
     }
 }

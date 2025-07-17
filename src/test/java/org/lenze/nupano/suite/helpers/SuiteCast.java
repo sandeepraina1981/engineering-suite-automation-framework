@@ -16,4 +16,11 @@ public class SuiteCast extends SuiteAbilities {
 
         return castSuite;
     }
+
+    Cast castAuth() {
+        Cast castSuite = new Cast();
+        castSuite.actorNamed(authActor().getName(), authAbility());
+
+        return castSuite;
+    }
 }
