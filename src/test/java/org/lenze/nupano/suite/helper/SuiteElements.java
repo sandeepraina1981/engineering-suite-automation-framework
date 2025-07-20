@@ -1,11 +1,10 @@
-package org.lenze.nupano.suite.helpers;
+package org.lenze.nupano.suite.helper;
 
 import net.serenitybdd.core.Serenity;
 import net.serenitybdd.core.pages.PageObject;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.serenitybdd.screenplay.actions.Evaluate;
 import net.serenitybdd.screenplay.waits.WaitUntil;
-import org.lenze.nupano.suite.properties.SuiteProperties;
 import org.openqa.selenium.By;
 
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isPresent;

@@ -1,4 +1,4 @@
-package org.lenze.nupano.suite.helpers;
+package org.lenze.nupano.suite.helper;
 
 import net.serenitybdd.screenplay.actors.Cast;
 
@@ -13,13 +13,6 @@ public class SuiteCast extends SuiteAbilities {
     Cast castUI() {
         Cast castSuite = new Cast(uiAbility());
         castSuite.actorNamed(uiActor().getName(), uiAbility());
-
-        return castSuite;
-    }
-
-    Cast castAuth() {
-        Cast castSuite = new Cast();
-        castSuite.actorNamed(authActor().getName(), authAbility());
 
         return castSuite;
     }

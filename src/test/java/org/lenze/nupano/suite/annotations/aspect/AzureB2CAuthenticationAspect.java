@@ -3,11 +3,13 @@ package org.lenze.nupano.suite.annotations.aspect;
 import io.cucumber.java.en.When;
 import net.serenitybdd.core.Serenity;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.lenze.nupano.suite.annotations.AzureB2CAuthentication;
 import org.lenze.nupano.suite.authentiction.oauth2.authorizationcode.pkce.Azure;
+import org.lenze.nupano.suite.enummeration.AzureB2CAuthenticationType;
 
 import java.lang.reflect.Method;
 
@@ -43,11 +45,15 @@ public class AzureB2CAuthenticationAspect {
         if (method != null) {
             AzureB2CAuthentication azureB2CAuthentication = method.getAnnotation(AzureB2CAuthentication.class);
 
-            if (azureB2CAuthentication.type().equalsIgnoreCase("pkce"))
+            if (azureB2CAuthentication.type().equalsIgnoreCase(AzureB2CAuthenticationType.PKCE.getType())) {
+                Serenity.environmentVariables().setProperty("azureB2CAuthenticationType", AzureB2CAuthenticationType.PKCE.getType());
                 new Azure().B2C();
+            }
 
-            if (azureB2CAuthentication.type().equalsIgnoreCase("ui"))
+            if (azureB2CAuthentication.type().equalsIgnoreCase(AzureB2CAuthenticationType.UI.getType())) {
+                Serenity.environmentVariables().setProperty("azureB2CAuthenticationType", AzureB2CAuthenticationType.UI.getType());
                 new org.lenze.nupano.suite.authentiction.ui.Azure().SignIn();
+            }
         }
     }
 

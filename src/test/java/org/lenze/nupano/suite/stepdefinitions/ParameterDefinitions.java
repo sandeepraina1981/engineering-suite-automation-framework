@@ -1,9 +1,14 @@
 package org.lenze.nupano.suite.stepdefinitions;
 
+import io.cucumber.java.After;
+import io.cucumber.java.AfterStep;
+import io.cucumber.java.Before;
 import io.cucumber.java.ParameterType;
+import net.serenitybdd.core.Serenity;
 import net.serenitybdd.screenplay.Actor;
-import org.lenze.nupano.suite.helpers.SuiteStage;
-import org.lenze.nupano.suite.properties.SuiteProperties;
+import org.lenze.nupano.suite.helper.SuiteStage;
+import org.lenze.nupano.suite.helper.SuiteProperties;
+import org.openqa.selenium.WebDriver;
 
 public class ParameterDefinitions extends SuiteStage {
     @ParameterType(".*")

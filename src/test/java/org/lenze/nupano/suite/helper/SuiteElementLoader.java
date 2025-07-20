@@ -1,4 +1,4 @@
-package org.lenze.nupano.suite.helpers;
+package org.lenze.nupano.suite.helper;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
