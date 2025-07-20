@@ -5,7 +5,7 @@ import net.serenitybdd.core.Serenity;
 import org.lenze.nupano.suite.enummeration.AzureB2CAuthenticationType;
 import org.lenze.nupano.suite.helper.SuiteStage;
 import org.lenze.nupano.suite.helper.SuiteProperties;
-import org.lenze.nupano.suite.stepdefinitions.ui.Login;
+import org.lenze.nupano.suite.interactions.AzureB2CLogin;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class Azure extends SuiteStage {
@@ -19,6 +19,6 @@ public class Azure extends SuiteStage {
             SuiteProperties.activeStage.shineSpotlightOn("Derek");
         }
 
-        SuiteProperties.activeStage.theActorInTheSpotlight().attemptsTo(Login.viaStoredAuth());
+        SuiteProperties.activeStage.theActorInTheSpotlight().attemptsTo(AzureB2CLogin.viaStoredAuth());
     }
 }

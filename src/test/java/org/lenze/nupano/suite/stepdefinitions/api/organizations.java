@@ -33,7 +33,7 @@ public class organizations {
 
         actorOrgApi.should(
                 seeThatResponse(actorOrgApi.getName()
-                                .concat(" should not see the list of organizations access denied message"),
+                                .concat(" should not see the list of organizations with access denied message"),
                         response -> response.statusCode(403).body("type", is("access-denied"))));
     }
 
