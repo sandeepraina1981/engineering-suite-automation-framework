@@ -5,6 +5,7 @@ import java.lang.annotation.*;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface AzureB2CAuthentication {
+@Documented
+public @interface StageMember {
     AzureB2CAuthenticationType type() default AzureB2CAuthenticationType.PKCE;
 }

@@ -7,6 +7,8 @@ import net.serenitybdd.rest.SerenityRest;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.rest.interactions.Get;
 import org.lenze.nupano.suite.annotations.AzureB2CAuthentication;
+import org.lenze.nupano.suite.annotations.StageMember;
+import org.lenze.nupano.suite.enummeration.AzureB2CAuthenticationType;
 
 import java.util.List;
 
@@ -16,7 +18,6 @@ import static org.hamcrest.Matchers.is;
 
 public class organizations {
     @When("{actorOrgAPI} receives list of organizations authenticated through {string} of organization {string}")
-    @AzureB2CAuthentication(type = "PKCE")
     public void receiveListOfOrganizations(Actor actorOrgApi, String user, String organization) {
         listOfOrganizations(actorOrgApi);
 
@@ -27,13 +28,12 @@ public class organizations {
     }
 
     @When("{actorOrgAPI} sees access denied to receive list of organizations authenticated through {string} of organization {string}")
-    @AzureB2CAuthentication(type = "PKCE")
     public void notreceiveListOfOrganizations(Actor actorOrgApi, String user, String organization) {
         listOfOrganizations(actorOrgApi);
 
         actorOrgApi.should(
                 seeThatResponse(actorOrgApi.getName()
-                                .concat(" should not see the list of organizations with access denied message"),
+                                .concat(" should ensures list of organizations not accessible with access denied message"),
                         response -> response.statusCode(403).body("type", is("access-denied"))));
     }
 
@@ -55,7 +55,8 @@ public class organizations {
         }
     }
 
-    private void listOfOrganizations(Actor actor) {
+    @AzureB2CAuthentication(type = AzureB2CAuthenticationType.PKCE)
+    public void listOfOrganizations(Actor actor) {
         SerenityRest.clear();
         SerenityRest.setUrlEncodingEnabled(false);
 

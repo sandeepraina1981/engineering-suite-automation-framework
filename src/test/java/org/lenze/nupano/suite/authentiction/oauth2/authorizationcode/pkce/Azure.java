@@ -1,12 +1,10 @@
 package org.lenze.nupano.suite.authentiction.oauth2.authorizationcode.pkce;
 
 import com.microsoft.aad.msal4j.*;
-import net.serenitybdd.annotations.Step;
 import net.serenitybdd.core.Serenity;
-import net.serenitybdd.screenplay.actions.Browser;
+import org.lenze.nupano.suite.annotations.StageMember;
 import org.lenze.nupano.suite.helper.SuiteProperties;
-import org.openqa.selenium.WebDriver;
-
+import org.lenze.nupano.suite.stepdefinitions.ui.Authentication;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -14,13 +12,9 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.atomic.AtomicBoolean;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 
 public class Azure {
-    @Step("Perform SSO login using Microsoft Azure B2C")
+    @StageMember
     public void B2C() {
         String clientId = Serenity.environmentVariables().getProperty("azureb2c_clientId");
         String tenant = Serenity.environmentVariables().getProperty("azureb2c_tenant");
@@ -47,7 +41,7 @@ public class Azure {
         OpenBrowserAction browserAction = url -> {
             try {
                 Serenity.environmentVariables().setProperty("nupanosuite_url", String.valueOf(url.toURI()));
-                new org.lenze.nupano.suite.authentiction.ui.Azure().SignIn();
+                new Authentication().AzureB2CAuthentication(SuiteProperties.activeStage.theActorInTheSpotlight());
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -77,6 +71,5 @@ public class Azure {
 
         Serenity.environmentVariables().setProperty("azureb2c_accesstoken", result.accessToken());
         Serenity.environmentVariables().setProperty("azureb2c_tokenID", result.idToken());
-        Serenity.reportThat("Azure B2C Token generated successfully", () -> assertThat(true).isEqualTo(true));
     }
 }
