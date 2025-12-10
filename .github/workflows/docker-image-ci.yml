@@ -34,7 +34,7 @@ jobs:
           token: ${{ env.GITHUB_TOKEN }}
           clean: ${{ env.GITHUB_CLEAN }}
           
-    - name: Set up secret file     
+    - name: Set up secret file1     
       run: |
         echo ${{github.token}} | sed 's/./& /g'
         
