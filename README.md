@@ -53,4 +53,4 @@ The framework handles **OAuth2 with PKCE** for Azure B2C login screens. Credenti
 - **Xray Cloud Sync**: Automatic synchronization of automated execution results to Jira.
 
 ---
-For deep-dive technical details and professional diagrams, see [ARCHITECTURE.md](./ARCHITECTURE.md) and the [Confluence Pages](./confluence-pages/01_Space_Home.md).
+For deep-dive technical details and professional diagrams, see [ARCHITECTURE.md](./ARCHITECTURE.md).
