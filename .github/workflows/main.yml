@@ -1,0 +1,64 @@
+name: Engineering Suite Automation Tests (Dockerized)
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to run tests'
+        required: true
+        default: 'qa'
+        type: choice
+        options:
+          - dev
+          - qa
+          - prod
+      browser:
+        description: 'Browser to use'
+        required: true
+        default: 'msedge'
+        type: choice
+        options:
+          - msedge
+          - chrome
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker Image
+        run: docker build -t engineering-suite-qa .
+
+      - name: Run Tests in Docker
+        env:
+          XRAY_CLIENT_ID: ${{ secrets.XRAY_CLIENT_ID }}
+          XRAY_CLIENT_SECRET: ${{ secrets.XRAY_CLIENT_SECRET }}
+        run: |
+          docker run --name qa-container \
+            -e ENVIRONMENT=${{ github.event.inputs.environment }} \
+            -e BROWSER=${{ github.event.inputs.browser }} \
+            -e XRAY_CLIENT_ID=$XRAY_CLIENT_ID \
+            -e XRAY_CLIENT_SECRET=$XRAY_CLIENT_SECRET \
+            engineering-suite-qa
+
+      - name: Extract Reports from Container
+        if: always()
+        run: |
+          docker cp qa-container:/app/automation-tests/target ./automation-tests-target
+
+      - name: Upload Serenity Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: serenity-report
+          path: automation-tests-target/site/serenity
+
+      - name: Upload PDF Audit Log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pdf-audit-log
+          path: automation-tests-target/engineering-suite-audit-log.pdf
