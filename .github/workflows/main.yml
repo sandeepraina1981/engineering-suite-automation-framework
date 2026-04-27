@@ -4,18 +4,18 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Environment to run tests'
+        description: "Environment to run tests"
         required: true
-        default: 'qa'
+        default: "qa"
         type: choice
         options:
           - dev
           - qa
           - prod
       browser:
-        description: 'Browser to use'
+        description: "Browser to use"
         required: true
-        default: 'msedge'
+        default: "msedge"
         type: choice
         options:
           - msedge
@@ -23,7 +23,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: [arc, stable]
 
     steps:
       - name: Checkout code
