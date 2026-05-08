@@ -20,7 +20,7 @@ env:
 
 jobs:
   build:
-    runs-on: [arc, stable]
+    runs-on: [arc, terraform, stable]
     permissions:
       contents: read
       packages: write
