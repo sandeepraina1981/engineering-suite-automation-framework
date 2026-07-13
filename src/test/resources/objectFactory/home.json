@@ -1,0 +1,59 @@
+[
+  {
+    "id" : "uname",
+    "value": "//input[@id='username']"
+  },
+  {
+    "id": "pword",
+    "value": "//input[@id='password']"
+  },
+  {
+    "id": "login",
+    "value": "//button[@id='submit']"
+  },
+  {
+    "id": "txtmsg",
+    "value": "//div[@id ='loop-container']//h1"
+  },
+  {
+    "id": "link_Logout",
+    "value": "a[href*= 'login']"
+  },
+  {
+    "id": "link_practice",
+    "value": "#menu-primary-items li:nth-child(2)"
+  },
+  {
+    "id": "link_exception",
+    "value": "a[href$= 'exceptions/']"
+  },
+  {
+    "id": "txtException",
+    "value": "#food_list h2"
+  },
+  {
+    "id": "TC5",
+    "value": "//*[@id='food_list']//h5[contains(text(), 'Test case 5')]"
+  },
+  {
+    "id": "btn_edit",
+    "value": "#edit_btn"
+  },
+  {
+    "id": "btn_add",
+    "value": "#add_btn"
+  },
+  {
+    "id": "txtbx_Row1",
+    "value": "#row1 input"
+  },
+  {
+    "id": "txtbx_row2",
+    "value": "#row2 input"
+  },
+  {
+    "id": "all_row",
+    "value": "#rows input"
+  }
+
+]

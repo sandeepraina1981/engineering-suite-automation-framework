@@ -1,0 +1,9 @@
+<extentreports>
+    <configuration>
+        <reportName>Playwright + Cucumber Report</reportName>
+        <documentTitle>Automation Execution</documentTitle>
+        <theme>standard</theme> <!-- or dark -->
+        <encoding>utf-8</encoding>
+        <timelineEnabled>true</timelineEnabled>
+    </configuration>
+</extentreports>
