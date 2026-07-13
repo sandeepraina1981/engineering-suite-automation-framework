@@ -15,6 +15,7 @@
         <junit.jupiter.version>5.10.2</junit.jupiter.version>
         <cucumber.version>7.14.0</cucumber.version>
         <playwright.version>1.57.0</playwright.version>
+        <fasterxml>2.18.2</fasterxml>
         <surefire.version>3.2.5</surefire.version>
         <maven.plugins.version>3.5.1</maven.plugins.version>
         <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
@@ -79,7 +80,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.13.3</version>
+            <version>${fasterxml}</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
