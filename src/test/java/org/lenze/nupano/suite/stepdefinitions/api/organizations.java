@@ -7,7 +7,6 @@ import net.serenitybdd.rest.SerenityRest;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.rest.interactions.Get;
 import org.lenze.nupano.suite.annotations.AzureB2CAuthentication;
-import org.lenze.nupano.suite.annotations.StageMember;
 import org.lenze.nupano.suite.enummeration.AzureB2CAuthenticationType;
 
 import java.util.List;
@@ -59,6 +58,7 @@ public class organizations {
     public void listOfOrganizations(Actor actor) {
         SerenityRest.clear();
         SerenityRest.setUrlEncodingEnabled(false);
+        SerenityRest.useRelaxedHTTPSValidation();
 
         actor.attemptsTo(Get.resource("/organizations")
                 .with(request -> request.header("User-Agent", "Apache")
