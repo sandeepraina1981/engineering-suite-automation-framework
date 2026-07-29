@@ -1,4 +1,4 @@
-# Azure AD B2C Authentication Framework using MSAL4J, Serenity BDD and PKCE
+# 📘 Azure AD B2C Authentication Framework using MSAL4J, Serenity BDD and PKCE
 
 ## 📖 Overview
 
