@@ -20,6 +20,11 @@ on:
         options:
           - msedge
           - chrome
+      build:
+        description: "Build id to use for the tests"
+        required: true
+        default: "sdcb-319"
+        type: string
 
 jobs:
   test:
@@ -34,7 +39,7 @@ jobs:
 
       - name: Run Tests in Docker
         run: |
-          docker run --name qa-container engineering-suite-qa
+          docker run --name qa-container -e SUITE_ID="${{ github.event.inputs.build }}" engineering-suite-qa
 
       - name: Extract Reports from Container
         if: always()

@@ -12,7 +12,7 @@ public class SuiteAbilities extends SuiteActors {
     }
 
     public Ability[] apiAbility(String serviceContext) {
-        Ability[] abilitySuite = {CallAnApi.at("https://" + Serenity.environmentVariables().getProperty("suite_id") + "." + serviceContext + ".api" + ".dev.engineering-suite.lenze.com")};
+        Ability[] abilitySuite = {CallAnApi.at("https://" + System.getenv("SUITE_ID") + "." + serviceContext + ".api" + ".dev.engineering-suite.lenze.com")};
         return abilitySuite;
     }
 }
