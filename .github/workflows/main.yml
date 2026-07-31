@@ -1,0 +1,56 @@
+name: Engineering Suite Automation Tests (Dockerized)
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to run tests"
+        required: true
+        default: "qa"
+        type: choice
+        options:
+          - dev
+          - qa
+          - prod
+      browser:
+        description: "Browser to use"
+        required: true
+        default: "chrome"
+        type: choice
+        options:
+          - msedge
+          - chrome
+
+jobs:
+  test:
+    runs-on: [arc, docker, stable]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker Image
+        run: docker build --build-arg SOURCE_PATH=$(pwd) --build-arg HOST_NAME=$(hostname) -t engineering-suite-qa .
+
+      - name: Run Tests in Docker
+        run: |
+          docker run --name qa-container engineering-suite-qa
+
+      - name: Extract Reports from Container
+        if: always()
+        run: |
+          docker cp qa-container:/app/report ./automation-tests-target
+
+      - name: Upload Serenity Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: serenity-report
+          path: automation-tests-target
+
+#      - name: Upload PDF Audit Log
+#        if: always()
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: pdf-audit-log
+#          path: automation-tests-target/engineering-suite-audit-log.pdf

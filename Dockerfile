@@ -1,42 +1,47 @@
-FROM alpine:latest
+# Use a Microsoft Playwright base image with Java 17 and browsers pre-installed
+FROM mcr.microsoft.com/playwright/java:v1.40.0-jammy
 
-USER root
+ARG SOURCE_PATH
+ENV SOURCE_PATH=${SOURCE_PATH}
 
-RUN apk --no-cache --update add --virtual build-dependencies --allow-untrusted
-RUN apk update
-RUN apk add --no-cache openjdk21 maven git openssh-client
+ARG HOST_NAME
+ENV HOST_NAME=${HOST_NAME}
 
-ARG JAVA_HOME=/usr/lib/jvm/java-21-openjdk
-ARG MAVEN_HOME=/root/.m2
-ARG PATH="$JAVA_HOME/bin:$MAVEN_HOME:$PATH"
-ARG LENZE=/lenze
-ARG SUITE=$LENZE/suite
-ARG FRAMEWORK=$SUITE/testframework
+# Set the working directory inside the container
+WORKDIR /app
 
-ENV GIT_ORGANIZATION=NUPANO
-ENV GIT_REPOSITOARY=nupano_suite_testautomation
-ENV GIT_BRANCH=main
-ENV TEST_LABELS=regression
-ENV TEST_URL=https://www.google.com
+RUN echo "Source folder: ${SOURCE_PATH}"
 
-RUN mkdir -m 777 -p $FRAMEWORK
-RUN mkdir -m 777 -p $LENZE
-RUN mkdir -m 777 -p $SUITE
-RUN mkdir -m 777 -p $MAVEN_HOME
+# Install Maven
+RUN apt-get update && \
+    apt-get install -y maven && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN mkdir /root/.ssh && chmod -R 700 /root/.ssh
-ADD .ssh/ /root/.ssh
-RUN chmod 0400 /root/.ssh/id_rsa
+RUN apt-get update && \
+    apt-get install -y wget gnupg ca-certificates && \
+    wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/google-chrome.gpg && \
+    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list && \
+    apt-get update && \
+    apt-get install -y google-chrome-stable && \
+    rm -rf /var/lib/apt/lists/*
 
-ADD pom.xml $SUITE
-ADD settings.xml $MAVEN_HOME/settings.xml
+RUN google-chrome --headless --no-sandbox --disable-dev-shm-usage --version
 
-WORKDIR $SUITE
-RUN mvn verify -DskipTests
+# Copy the Maven project structure
+COPY . .
 
-WORKDIR $FRAMEWORK
-VOLUME $FRAMEWORK
+# Pre-fetch dependencies to leverage Docker cache
+RUN mvn dependency:go-offline -B
 
-CMD ["sh", "-c", "ssh-keyscan github.com >>/root/.ssh/known_hosts && \
-                  git clone git@github.com:$GIT_ORGANIZATION/$GIT_REPOSITOARY.git . && \
-                  mvn -o verify -Dlabel=$TEST_LABELS -Dsuite_url=$TEST_URL"]
+# Copy the source code
+COPY src src
+
+# Set environment variables (defaults)
+ENV ENVIRONMENT=qa
+ENV BROWSER=chrome
+ENV XRAY_CLIENT_ID=""
+ENV XRAY_CLIENT_SECRET=""
+
+# Command to run tests and generate reports
+# We use 'sh -c' to allow environment variable expansion in the command
+CMD ["sh", "-c", "mvn clean verify && echo Host: ${HOST_NAME} && echo Source Path: ${HOST_NAME}/${SOURCE_PATH}/report/index.html"]

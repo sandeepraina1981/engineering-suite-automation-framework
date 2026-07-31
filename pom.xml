@@ -151,9 +151,9 @@
           </dependency>
         </dependencies>
         <configuration>
-          <complianceLevel>21</complianceLevel>
-          <source>21</source>
-          <target>21</target>
+          <complianceLevel>17</complianceLevel>
+          <source>17</source>
+          <target>17</target>
 
           <showWeaveInfo>true</showWeaveInfo>
           <verbose>true</verbose>
@@ -208,8 +208,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>${maven.compiler.plugin.version}</version>
         <configuration>
-          <source>21</source>
-          <target>21</target>
+          <source>17</source>
+          <target>17</target>
           <compilerArgs>
             <arg>-Xlint:deprecation</arg>
             <arg>-Xlint:unchecked</arg>
