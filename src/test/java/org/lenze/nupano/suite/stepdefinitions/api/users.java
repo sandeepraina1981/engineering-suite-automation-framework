@@ -1,6 +1,8 @@
 package org.lenze.nupano.suite.stepdefinitions.api;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.serenitybdd.core.Serenity;
 import net.serenitybdd.rest.SerenityRest;
@@ -12,8 +14,8 @@ import org.lenze.nupano.suite.enummeration.AzureB2CAuthenticationType;
 import java.util.List;
 
 import static net.serenitybdd.screenplay.rest.questions.ResponseConsequence.seeThatResponse;
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.Matchers.*;
 
 public class users {
     @When("{actorOrgAPI} receives list of users authenticated through {string} of users {string}")
@@ -42,6 +44,26 @@ public class users {
                             response -> response.body("content.findAll { it.firstName != null }.firstName", hasItem(expectedUserName)))
             );
         }
+    }
+
+    @Then("{actorOrgAPI} verifies the user list fields from the list of users")
+    public void readsUserList(Actor actorUserApi, List<String> expectedUserFields) {
+        for (String expectedUserField : expectedUserFields){
+            actorUserApi.should(
+                    seeThatResponse("Verify field '"
+                                    .concat(expectedUserField)
+                                    .concat("' exists in user list"),
+                            response -> response.body("content.findAll { it.containsKey('" + expectedUserField + "') }", not(empty())))
+            );
+        }
+    }
+
+    @And("{actorOrgAPI} confirms that the list of users is not empty")
+    public void verifyUserListNotEmpty(Actor actorUserApi) {
+        actorUserApi.should(
+                seeThatResponse("Verify user list contains user names",
+                        response -> response.body("content.size()", greaterThan(0)))
+        );
     }
 
     @AzureB2CAuthentication(type = AzureB2CAuthenticationType.PKCE)

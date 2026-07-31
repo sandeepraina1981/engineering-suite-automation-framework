@@ -4,17 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74ce4fd2-f075-47e3-a71f-37ca3e0d1a74" name="Changes" comment="Handling B2C login through custom url">
-      <change afterPath="$PROJECT_DIR$/.github/workflows/main.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/docker-image-ci.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/docker-image-ci.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="74ce4fd2-f075-47e3-a71f-37ca3e0d1a74" name="Changes" comment="docker related changes">
+      <change afterPath="$PROJECT_DIR$/src/test/resources/features/api/userlist.feature" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/serenity.properties" beforeDir="false" afterPath="$PROJECT_DIR$/serenity.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/lenze/nupano/suite/stepdefinitions/api/users.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/lenze/nupano/suite/stepdefinitions/api/users.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/resources/features/api/users.feature" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/features/api/users.feature" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/serenity.conf" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/serenity.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testexecutor.env" beforeDir="false" afterPath="$PROJECT_DIR$/testexecutor.env" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +113,20 @@
       <option name="presentableId" value="Default" />
       <updated>1784877068956</updated>
     </task>
+    <task id="LOCAL-00001" summary="docker related changes">
+      <option name="closed" value="true" />
+      <created>1785479843012</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1785479843012</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="docker related changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="docker related changes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
